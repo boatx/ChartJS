@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="text/javascript" src="diagJs.js">
+        </script>
+        <title>DiagJs</title>
+    </head>
+    <body>
+        <canvas width="800" height="800" id="can">
+            Sorry twoj canvas nie dziala
+        </canvas>
+        <script type="text/javascript">
+
+            var elementArray = [];
+            elementArray.dom = 0.3;
+            elementArray.praca = 0.6;
+            elementArray.wypoczynek = 0.1;
+
+            var colorArray = [];
+            colorArray.dom = 'green';
+            colorArray.praca = 'red';
+            colorArray.wypoczynek = 'blue';
+
+            var canvas = document.getElementById('can');
+            var wyk = new CircDiag(elementArray, colorArray, canvas);
+            wyk.draw();
+        </script>
+    </body>
+</html>
