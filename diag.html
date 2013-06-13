@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script type="text/javascript" src="diagJs.js">
+        <script type="text/javascript" src="diagJS.js">
         </script>
         <title>DiagJs</title>
     </head>
@@ -24,6 +24,7 @@
             var canvas = document.getElementById('can');
             var wyk = new CircDiag(elementArray, colorArray, canvas);
             wyk.draw();
+            wyk.addLabels();
         </script>
     </body>
 </html>

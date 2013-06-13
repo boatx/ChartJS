@@ -24,6 +24,25 @@ function degToRad(deg) {
     return (Math.PI / 180) * deg;
 }
 
+function radToDeg(rad) {
+    "use strict";
+    return rad * (180 / Math.PI);
+}
+
+function degToLen(deg,x,y,r) {
+    "use strict";
+    return {
+        'x': x + r * Math.cos(deg),
+        'y': y + r * Math.sin(deg)
+    };
+}
+
+function dist(x1,y1,x2,y2) {
+    "use strict";
+    return Math.sqrt((x2 - x1) * (x2 - x1) + (y2 - y1)*(y2 - y1));
+}
+
+
 function PeaceOfCake(radius, stAngle, endAngle, centX, centY, color) {
     "use strict";
     this.radius = radius;
@@ -78,6 +97,27 @@ function CircDiag(elementArray, colorArray, canvas) {
                     this.peacesArray[i] = new PeaceOfCake(this.radius, stAng, endAng, this.centX, this.centY, this.colorArray[i]);
                     this.peacesArray[i].draw(canvas);
                     stAng = endAng;
+                }
+            }
+        }
+    };
+
+    this.addLabels = function (d,ad) {
+
+        d = typeof a !== 'undefined' ? d : 0.1*this.radius;
+        ad = typeof b !== 'undefined' ? ad : 0;
+
+        if (canvas.getContext) {
+            var c=canvas.getContext('2d'),i,xy,a,d;
+            c.font = "bold 12px sans-serif";
+            for (i in this.elementArray) {
+                if (this.elementArray.hasOwnProperty(i)) {
+                    if (this.peacesArray[i]) {
+                        a=(this.peacesArray[i].stAngle + this.peacesArray[i].endAngle) / 2.0;
+                        a+=ad;
+                        xy=degToLen(a,this.peacesArray[i].centX, this.peacesArray[i].centY, this.peacesArray[i].radius+d);
+                        c.fillText(i,xy['x'],xy['y']);
+                    }
                 }
             }
         }
