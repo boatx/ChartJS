@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset='utf-8'>
         <script type="text/javascript" src="diagJS.js">
         </script>
         <title>DiagJs</title>
@@ -22,9 +23,8 @@
             colorArray.wypoczynek = 'blue';
 
             var canvas = document.getElementById('can');
-            var wyk = new CircDiag(elementArray, colorArray, canvas);
+            var wyk = diagJS.CircDiag(elementArray, colorArray, canvas);
             wyk.draw();
-            wyk.addLabels();
         </script>
     </body>
 </html>
