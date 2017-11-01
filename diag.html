@@ -2,28 +2,30 @@
 <html>
     <head>
         <meta charset='utf-8'>
-        <script type="text/javascript" src="diagJS.js">
+        <script type="text/javascript" src="diagjs.js">
         </script>
         <title>DiagJs</title>
     </head>
     <body>
         <canvas width="800" height="800" id="can">
-            Sorry twoj canvas nie dziala
+            Sorry, canvas not supported
         </canvas>
         <script type="text/javascript">
 
-            var elementArray = [];
-            elementArray.dom = 0.3;
-            elementArray.praca = 0.6;
-            elementArray.wypoczynek = 0.1;
+            var elements = {
+                dogs: 0.3,
+                cats: 0.6,
+                dinosaurs: 0.1
+            };
 
-            var colorArray = [];
-            colorArray.dom = 'green';
-            colorArray.praca = 'red';
-            colorArray.wypoczynek = 'blue';
+            var colors = {
+                dogs: 'green',
+                cats: 'blue',
+                dinosaurs: 'red'
+            };
 
             var canvas = document.getElementById('can');
-            var wyk = diagJS.CircDiag(elementArray, colorArray, canvas);
+            var wyk = diagJS.CircDiag(elements, colors, canvas);
             wyk.draw();
         </script>
     </body>

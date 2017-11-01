@@ -1,22 +1,3 @@
-/*
-    Copyright (C) 2012 BoatX
-
-    This file is part of diagJS.
-
-    diagJS is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    diagJS is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with diagJS.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
 /*global document */
 /*global window */
 
@@ -142,7 +123,7 @@ var diagJS = (function () {
         };
 
         this.animate = function () {
-            var reqAnimFrame = window.mozRequestAnimationFrame    ||
+            var reqAnimFrame = window.requestAnimationFrame    ||
                             window.webkitRequestAnimationFrame ||
                             window.msRequestAnimationFrame     ||
                             window.oRequestAnimationFrame;
