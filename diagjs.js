@@ -61,7 +61,7 @@ var diagJS = (function () {
         };
     }
 
-    function CircDiag(elementArray, colorArray, canvas) {
+    function PieChart(elementArray, colorArray, canvas) {
         this.elementArray = elementArray;
         this.colorArray = colorArray;
         this.peacesArray = [];
@@ -183,8 +183,8 @@ var diagJS = (function () {
     }
 
     return {
-        CircDiag: function (elementArray, colorArray, canvas) {
-            return new CircDiag(elementArray, colorArray, canvas);
+        PieChart: function (elementArray, colorArray, canvas) {
+            return new PieChart(elementArray, colorArray, canvas);
         }
     };
 }());
