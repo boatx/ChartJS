@@ -19,8 +19,8 @@ Pie charts JavaScript library, use only canvas.
     };
 
     var canvas = document.getElementById('can');
-    var diag = diagJS.CircDiag(elements, colors, canvas);
-    diag.draw();
+    var chart = chartJS.PieChart(elements, colors, canvas);
+    chart.draw();
 
 ```
 

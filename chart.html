@@ -2,9 +2,9 @@
 <html>
     <head>
         <meta charset='utf-8'>
-        <script type="text/javascript" src="diagjs.js">
+        <script type="text/javascript" src="chartjs.js">
         </script>
-        <title>DiagJs</title>
+        <title>ChartJS</title>
     </head>
     <body>
         <canvas width="800" height="800" id="can">
@@ -25,8 +25,8 @@
             };
 
             var canvas = document.getElementById('can');
-            var diag = diagJS.PieChart(elements, colors, canvas);
-            diag.draw();
+            var chart = chartJS.PieChart(elements, colors, canvas);
+            chart.draw();
         </script>
     </body>
 </html>

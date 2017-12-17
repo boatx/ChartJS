@@ -1,7 +1,7 @@
 /*global document */
 /*global window */
 
-var diagJS = (function () {
+var chartJS = (function () {
 
     function degToRad(deg) {
         "use strict";
