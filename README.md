@@ -1,4 +1,4 @@
-# DiagJS
+# ChartJS
 
 Pie charts JavaScript library, use only canvas.
 
