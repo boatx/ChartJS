@@ -16,8 +16,8 @@ var chartJS = (function () {
     function degToLen(deg, x, y, r) {
         "use strict";
         return {
-            'x': x + r * Math.cos(deg),
-            'y': y + r * Math.sin(deg)
+            x: x + r * Math.cos(deg),
+            y: y + r * Math.sin(deg)
         };
     }
 
@@ -27,7 +27,7 @@ var chartJS = (function () {
     }
 
 
-    function PeaceOfCake(radius, stAngle, endAngle, centX, centY, color) {
+    function PieceOfCake(radius, stAngle, endAngle, centX, centY, color) {
         "use strict";
         this.radius = radius;
         this.centX = centX;
@@ -37,34 +37,29 @@ var chartJS = (function () {
         this.endAngle = endAngle;
 
         this.draw = function (canvas) {
-            if (canvas.getContext) {
-                var c = canvas.getContext('2d');
-                c.beginPath();
-                c.arc(this.centX, this.centY, this.radius, this.stAngle, this.endAngle);
-                c.lineTo(this.centX, this.centY);
-                c.fillStyle = this.color;
-                c.fill();
-                c.closePath();
-                this.canvas = canvas;
+            if (!canvas.getContext) {
+                return
             }
+            var context = canvas.getContext('2d');
+            context.beginPath();
+            context.arc(this.centX, this.centY, this.radius, this.stAngle, this.endAngle);
+            context.lineTo(this.centX, this.centY);
+            context.fillStyle = this.color;
+            context.fill();
+            context.closePath();
+            this.canvas = canvas;
         };
 
         this.arcCenterVec = function () {
             var middeg = (endAngle - stAngle) / 2.0;
             return [Math.cos(middeg), Math.sin(middeg)];
         };
-
-        this.clear = function () {
-            if (this.canvas) {
-                return true;
-            }
-        };
     }
 
-    function PieChart(elementArray, colorArray, canvas) {
-        this.elementArray = elementArray;
-        this.colorArray = colorArray;
-        this.peacesArray = [];
+    function PieChart(elements, colors, canvas) {
+        this.elements = elements;
+        this.colors = colors;
+        this.pieces = [];
         this.centX = 400;
         this.centY = 400;
         this.radius = 200;
@@ -73,53 +68,60 @@ var chartJS = (function () {
         var ob = this;
 
         this.draw = function () {
-            if (canvas.getContext) {
-                var c = canvas.getContext('2d'), stAng = 0, endAng = 0, i;
-                for (i in this.elementArray) {
-                    if (this.elementArray.hasOwnProperty(i)) {
-                        endAng = stAng + degToRad(360 * this.elementArray[i]);
-                        this.peacesArray[i] = new PeaceOfCake(this.radius, stAng, endAng, this.centX, this.centY, this.colorArray[i]);
-                        this.peacesArray[i].draw(canvas);
-                        stAng = endAng;
-                    }
-                }
-                this.addLabels();
+            if (!canvas.getContext) {
+                return
             }
+            var context = canvas.getContext('2d'), startAngle = 0, endAng = 0, element;
+            for (element in this.elements) {
+                if (this.elements.hasOwnProperty(element)) {
+                    endAng = startAngle + degToRad(360 * this.elements[element]);
+                    this.pieces[element] = new PieceOfCake(
+                        this.radius, startAngle, endAng, this.centX, this.centY, this.colors[element]
+                    );
+                    this.pieces[element].draw(canvas);
+                    startAngle = endAng;
+                }
+            }
+            this.addLabels();
         };
 
         this.redraw = function () {
-            if (this.canvas.getContext) {
-                var c = this.canvas.getContext('2d'),
-                    i;
-                c.clearRect(0, 0, this.canvas.width, this.canvas.height);
-                for (i in this.elementArray) {
-                    if (this.elementArray.hasOwnProperty(i)) {
-                        this.peacesArray[i].draw(this.canvas);
-                    }
-                }
-                this.addLabels();
+            if (!this.canvas.getContext) {
+                return;
             }
+            var context = this.canvas.getContext('2d'),
+                element;
+            context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+            for (element in this.elements) {
+                if (this.elements.hasOwnProperty(element)) {
+                    this.pieces[element].draw(this.canvas);
+                }
+            }
+            this.addLabels();
         };
 
-        this.addLabels = function (d,ad) {
+        this.getLabelPosition = function(chartElement) {
+            var bisection = (chartElement.stAngle + chartElement.endAngle) / 2.0;
+            var labelRadiusOffset = 0.1*this.radius;
+            var radius = chartElement.radius + labelRadiusOffset;
+            return degToLen(bisection, chartElement.centX, chartElement.centY, radius);
+        };
 
-            d = typeof a !== 'undefined' ? d : 0.1*this.radius;
-            ad = typeof b !== 'undefined' ? ad : 0;
 
-            if (canvas.getContext) {
-                var c=canvas.getContext('2d'),i,xy,a,d;
-                c.font = "bold 12px sans-serif";
-                for (i in this.elementArray) {
-                    if (this.elementArray.hasOwnProperty(i)) {
-                        if (this.peacesArray[i]) {
-                            a=(this.peacesArray[i].stAngle + this.peacesArray[i].endAngle) / 2.0;
-                            a+=ad;
-                            xy=degToLen(a,this.peacesArray[i].centX, this.peacesArray[i].centY, this.peacesArray[i].radius+d);
-                            c.fillText(i,xy['x'],xy['y']);
-                        }
-                    }
+        this.addLabels = function () {
+            if (!canvas.getContext) {
+                return;
+            }
+            var context = canvas.getContext('2d');
+            context.font = "bold 12px sans-serif";
+            for (var element in this.elements) {
+                if (this.elements.hasOwnProperty(element) && this.pieces[element]) {
+                    chartElement = this.pieces[element]
+                    var labelPosition = this.getLabelPosition(chartElement);
+                    context.fillText(element, labelPosition.x, labelPosition.y);
                 }
             }
+
         };
 
         this.animate = function () {
@@ -127,9 +129,10 @@ var chartJS = (function () {
                             window.webkitRequestAnimationFrame ||
                             window.msRequestAnimationFrame     ||
                             window.oRequestAnimationFrame;
-            if (ob.peacesArray[ob.activePeace].radius < 250) {
+            var activePiece = ob.pieces[ob.activePiece];
+            if (activePiece.radius < 250) {
                 reqAnimFrame(ob.animate);
-                ob.peacesArray[ob.activePeace].radius += ob.aniSpeed * ob.radius;
+                activePiece.radius += ob.aniSpeed * ob.radius;
                 ob.aniSpeed += 0.01;
                 ob.redraw();
             } else {
@@ -139,13 +142,12 @@ var chartJS = (function () {
 
 
         this.init = function () {
-            ob.canvas.onclick = function (e) {
-                var x = e.pageX - canvas.offsetLeft,
-                    y = e.pageY - canvas.offsetTop,
+            ob.canvas.onclick = function (event) {
+                var x = event.pageX - canvas.offsetLeft,
+                    y = event.pageY - canvas.offsetTop,
                     chk = (x - ob.centX) * (x - ob.centX) + (y - ob.centY) * (y - ob.centY),
                     v1dl,
-                    deg,
-                    i;
+                    deg;
                 if (chk <= ob.radius * ob.radius) {
                     x = x - ob.centX;
                     y = y - ob.centY;
@@ -154,14 +156,14 @@ var chartJS = (function () {
                     if (y < 0) {
                         deg = degToRad(360) - deg;
                     }
-                    for (i in ob.peacesArray) {
-                        if (ob.peacesArray.hasOwnProperty(i)) {
-                            if (deg >= ob.peacesArray[i].stAngle && deg <= ob.peacesArray[i].endAngle) {
-                                if (ob.activePeace !== i) {
-                                    if (ob.activePeace) {
-                                        ob.peacesArray[ob.activePeace].radius = ob.radius;
+                    for (var piece in ob.pieces) {
+                        if (ob.pieces.hasOwnProperty(piece)) {
+                            if (deg >= ob.pieces[piece].stAngle && deg <= ob.pieces[piece].endAngle) {
+                                if (ob.activePiece !== piece) {
+                                    if (ob.activePiece) {
+                                        ob.pieces[ob.activePiece].radius = ob.radius;
                                     }
-                                    ob.activePeace = i;
+                                    ob.activePiece = piece;
                                     ob.animate();
                                 }
 
@@ -169,10 +171,10 @@ var chartJS = (function () {
                         }
                     }
                 } else {
-                    if (ob.activePeace) {
-                        ob.peacesArray[ob.activePeace].radius = ob.radius;
+                    if (ob.activePiece) {
+                        ob.pieces[ob.activePiece].radius = ob.radius;
                         ob.redraw();
-                        delete ob.activePeace;
+                        delete ob.activePiece;
                     }
                 }
             };
@@ -183,8 +185,8 @@ var chartJS = (function () {
     }
 
     return {
-        PieChart: function (elementArray, colorArray, canvas) {
-            return new PieChart(elementArray, colorArray, canvas);
+        PieChart: function (elements, colors, canvas) {
+            return new PieChart(elements, colors, canvas);
         }
     };
 }());
