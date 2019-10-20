@@ -1,0 +1,26 @@
+{
+  "name": "ChartJS",
+  "version": "1.0.0",
+  "description": "Pie charts JavaScript library, use only canvas.",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack-dev-server --config ./webpack.config.js --mode development",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boatx/ChartJS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/boatx/ChartJS/issues"
+  },
+  "homepage": "https://github.com/boatx/ChartJS#readme",
+  "devDependencies": {
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.8.2"
+  }
+}
