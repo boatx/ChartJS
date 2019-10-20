@@ -5,12 +5,12 @@ module.exports = {
             {
                 test: /\.(js)$/,
                 exclude: /node_modules/,
-                use: ['babel-loader']
+                loader: 'babel-loader',
             }
         ]
     },
     resolve: {
-        extensions: ['*', '.js']
+        extensions: ['.js']
     },
     output: {
         path: __dirname + '/dist',
