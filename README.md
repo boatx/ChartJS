@@ -1,26 +1,31 @@
 # ChartJS
 
-Pie charts JavaScript library, use only canvas.
+Pie charts JavaScript library.
+
+## Build
+
+To build call:
+```bash
+webpack
+```
 
 ## Usage
 
 ```javascript
+  const elements = {
+    dogs: 0.3,
+    cats: 0.6,
+    dinosaurs: 0.1,
+  };
 
-    var elements = {
-        dogs: 0.3,
-        cats: 0.6,
-        dinosaurs: 0.1
-    };
+  const colors = {
+    dogs: 'green',
+    cats: 'blue',
+    dinosaurs: 'red',
+  };
 
-    var colors = {
-        dogs: 'green',
-        cats: 'blue',
-        dinosaurs: 'red'
-    };
-
-    var canvas = document.getElementById('can');
-    var chart = chartJS.PieChart(elements, colors, canvas);
-    chart.draw();
-
+  const canvas = document.getElementById('can');
+  const chart = new PieChart(elements, colors, canvas);
+  chart.draw();
 ```
 
