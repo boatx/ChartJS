@@ -1,17 +1,6 @@
-# ChartJS
+import { PieChart } from './piechart';
 
-Pie charts JavaScript library.
-
-## Build
-
-To build call:
-```bash
-webpack
-```
-
-## Usage
-
-```javascript
+const setup = () => {
   const elements = {
     dogs: 0.3,
     cats: 0.6,
@@ -27,5 +16,6 @@ webpack
   const canvas = document.getElementById('can');
   const chart = new PieChart(elements, colors, canvas);
   chart.draw();
-```
+};
 
+setup();
