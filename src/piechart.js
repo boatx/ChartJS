@@ -97,7 +97,7 @@ export class PieChart {
     };
 
     init() {
-        this.canvas.onclick = (event) => {
+        const handler = (event) => {
             let x = event.pageX - this.canvas.offsetLeft;
             let y = event.pageY - this.canvas.offsetTop;
             const point = new Point(x, y);
@@ -119,6 +119,7 @@ export class PieChart {
                         this.animate();
                     }
                 }
+                return
             } else {
                 if (this.activePiece) {
                     this.pieces[this.activePiece].radius = this.radius;
@@ -128,6 +129,6 @@ export class PieChart {
             }
         };
 
-        this.canvas.addEventListener('mousemove', this.canvas.onclick, false);
+        this.canvas.addEventListener('mousemove', handler, false);
     };
 }
