@@ -1,19 +1,21 @@
-import {PieceOfCake, PieChart} from './piechart';
+import { PieChart } from './piechart';
 
-var setup = (function() {
-    var elements = {
-        dogs: 0.3,
-        cats: 0.6,
-        dinosaurs: 0.1
-    };
+const setup = () => {
+  const elements = {
+    dogs: 0.3,
+    cats: 0.6,
+    dinosaurs: 0.1,
+  };
 
-    var colors = {
-        dogs: 'green',
-        cats: 'blue',
-        dinosaurs: 'red'
-    };
+  const colors = {
+    dogs: 'green',
+    cats: 'blue',
+    dinosaurs: 'red',
+  };
 
-    var canvas = document.getElementById('can');
-    var chart = new PieChart(elements, colors, canvas);
-    chart.draw();
-}());
+  const canvas = document.getElementById('can');
+  const chart = new PieChart(elements, colors, canvas);
+  chart.draw();
+};
+
+setup();
