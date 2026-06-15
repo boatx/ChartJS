@@ -19,7 +19,7 @@
   },
   "homepage": "https://github.com/boatx/ChartJS#readme",
   "devDependencies": {
-    "@babel/core": "^7.15.8",
+    "@babel/core": "^7.29.6",
     "@babel/preset-env": "^7.15.8",
     "babel-loader": "^8.2.2",
     "eslint": "^9.32.0",
